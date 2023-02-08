@@ -15,8 +15,8 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get(["/", "/api", "/api/users"], (req, res) => {
-  res.redirect("/api/users/show");
+app.get(["/", "/api"], (req, res) => {
+  res.redirect("/api");
 });
 app.use("/api", routesUserAPI);
 

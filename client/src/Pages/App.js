@@ -1,30 +1,38 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import Header from "../components/Header/Header";
 
 function App() {
   // useState
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/users/show")
-      .then((response) => response.json())
-      .then((data) => {
-        setUsers(data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }); // Dépendances vides pour ne déclencher l'effet qu'une seule fois lors du montage du composant.
-
-  const [isDeleted, setIsDeleted] = useState(false);
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:8080/api/users");
+      const data = await response.json();
+      console.log(data);
+      setUsers(data);
+    };
+    fetchData();
+  }, []); // Dépendances vides pour ne déclencher l'effet qu'une seule fois lors du montage du composant.
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`http://localhost:8080/api/users/delete/${id}`, {
+      const response = await fetch(`http://localhost:8080/api/users/${id}`, {
         method: "DELETE",
       });
-      setIsDeleted(true);
-      setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
+      // console.log(response);
+      console.log("ICI 1");
+      console.log(users);
+      setUsers([
+        {
+          name: "Emily Brown",
+          age: 26,
+          salary: 35000,
+        },
+      ]);
+      console.log("ICI 2");
+      console.log(users);
     } catch (error) {
       console.error(error);
     }
@@ -32,40 +40,30 @@ function App() {
 
   return (
     <>
-      <header>
-        <nav>
-          <ul>
-            <li>coucou</li>
-            <li>coucou</li>
-            <li>coucou</li>
-          </ul>
-        </nav>
-      </header>
+      <Header />
       <main>
-        <h1>First APP with MERN stack</h1>
+        <h1 className="text-5xl text-center font-bold underline pt-10 pb-20">
+          First APP with MERN stack
+        </h1>
         <div>
-          <a className="btn" href="/add">
-            Ajout un salarié
-          </a>
-
-          <table>
-            <caption>X documents en base de donnée</caption>
+          <table className="table-auto w-100 mx-auto text-left">
+            <caption>{users.length} documents en base de donnée</caption>
             <thead>
-              <tr>
-                <th>Nom Complet</th>
-                <th>Age</th>
-                <th>Salaire</th>
-                <th>Créé le</th>
-                <th>Actions</th>
+              <tr className="bg-gray-800 text-white">
+                <th className="px-8 py-2">Nom Complet</th>
+                <th className="px-8 py-2">Age</th>
+                <th className="px-8 py-2">Salaire</th>
+                <th className="px-8 py-2">Créé le</th>
+                <th className="px-8 py-2">Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.map((current) => (
-                <tr key={current._id}>
-                  <td>{current.name}</td>
-                  <td>{current.age}</td>
-                  <td>{current.salary}</td>
-                  <td>
+                <tr key={current._id} className="bg-gray-100">
+                  <td className="border px-8 py-2">{current.name}</td>
+                  <td className="border px-8 py-2">{current.age}</td>
+                  <td className="border px-8 py-2">{current.salary}</td>
+                  <td className="border px-8 py-2">
                     {new Date(current.created_at).toLocaleDateString("fr-FR", {
                       weekday: "long",
                       day: "numeric",
@@ -75,12 +73,15 @@ function App() {
                       second: "numeric",
                     })}
                   </td>
-                  <td>
+                  <td className="border px-8 py-2">
                     <button
-                      onClick={() => handleDelete(current._id)}
-                      className="btn btn-danger"
+                      onClick={(e) => {
+                        handleDelete(current._id);
+                      }}
+                      className="bg-red-600 text-white p-2 rounded"
                     >
-                      Delete
+                      {/* {console.log(current._id)} */}
+                      Supprimer
                     </button>
                   </td>
                 </tr>
