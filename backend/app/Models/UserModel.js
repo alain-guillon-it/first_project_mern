@@ -1,37 +1,23 @@
 const mongoose = require("mongoose");
 
-const COLLECTION_NAME = process.env.MONGODB_COLLECTION_NAME;
+const COLLECTION_NAME_USERS = process.env.MONGODB_COLLECTION_NAME_USERS;
 
 const UserSchema = new mongoose.Schema(
   {
-    name: {
+    username: { type: String, required: true, unique: true },
+    email: {
       type: String,
+      unique: true,
       required: true,
     },
-    age: {
-      type: Number,
-      required: true,
-    },
-    salary: {
-      type: Number,
-      required: true,
-    },
-    // email: {
-    //   type: String,
-    //   unique: true,
-    //   required: true
-    // },
-    // password: {
-    //   type: String,
-    //   required: true
-    // }
+    password: { type: String, required: true },
   },
   {
     timestamps: {
       createdAt: "created_at",
-      updatedAt: "updated_at",
+      updatedAt: "update_at",
     },
   }
 );
 
-module.exports = mongoose.model(COLLECTION_NAME, UserSchema);
+module.exports = mongoose.model(COLLECTION_NAME_USERS, UserSchema);
