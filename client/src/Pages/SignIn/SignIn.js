@@ -36,19 +36,9 @@ function SignIn() {
             />
           </div>
           <div>
-            <label>Confirme Password</label>
-            <input
-              className=" w-full bg-slate-50 p-2 mb-6 mt-1 border rounded"
-              type="password"
-              name="confirm_password"
-              id="confirm_password"
-              placeholder="Confirmer votre password"
-            />
-          </div>
-          <div>
-            <a className="bg-sky-300 p-2 rounded" href="/">
+            <button type="submit" className="bg-sky-300 p-2 rounded" href="/">
               Inscription
-            </a>
+            </button>
           </div>
         </form>
       </div>

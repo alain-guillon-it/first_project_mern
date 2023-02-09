@@ -6,6 +6,10 @@ const postLogin = (req, res) => {
     email: req.body.email
   }).limit(1).exec().then(
     response => {
+
+      // vérifier avec bcrypt le mot de passe
+      // générer le token
+
       console.log(response)
       res.end()
     }
@@ -16,13 +20,10 @@ const postLogout = (req, res) => {
   res.end();
 };
 const postSignIn = (req, res) => {
-  UserModel.findOne({ email: req.body.email }).then(result => {
-    if (!result) {
-      const newUser = new UserModel(req.body);
-      console.log(newUser)
-      res.end()
-    }
-  })
+  const newUser = new UserModel(req.body);
+  console.log(newUser)
+  newUser.save()
+  res.redirect("http://localhost:3000/login")
 };
 
 module.exports = {
