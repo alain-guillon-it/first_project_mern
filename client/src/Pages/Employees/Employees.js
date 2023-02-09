@@ -30,6 +30,7 @@ function Employees() {
       console.error(error);
     }
   };
+
   return (
     <main className="w-full  h-screen mx-auto  bg-slate-400 py-20">
       <h1 className="mb-28 text-center text-4xl uppercase underline">
@@ -42,15 +43,15 @@ function Employees() {
             <h1 className="mb-14 text-center text-4xl uppercase underline">
               Ajouter un employée
             </h1>
-            <form action="/login" method="post">
+            <form action="http://localhost:8080/api/employees" method="post">
               <div>
                 <label>Nom Complet</label>
                 <input
                   className=" w-full bg-slate-50 p-2 mb-3 mt-1 border rounded"
                   autoFocus
                   type="text"
-                  name="fullname"
-                  id="fullename"
+                  name="name"
+                  id="name"
                   placeholder="Votre nom complet ici"
                 />
               </div>
@@ -77,9 +78,12 @@ function Employees() {
                 />
               </div>
               <div>
-                <a className="bg-slate-800 text-white p-2 rounded" href="/">
+                <button
+                  type="submit"
+                  className="bg-slate-800 text-white p-2 rounded"
+                >
                   Ajouter
-                </a>
+                </button>
               </div>
             </form>
           </div>

@@ -24,8 +24,9 @@ const getEmployeeById = (req, res) => {
 
 const postAddEmployee = (req, res) => {
   const newEmployeeModel = new EmployeeModel(req.body);
-  newEmployeeModel.save();
-  res.end();
+  newEmployeeModel
+    .save()
+    .then(() => res.redirect("http://localhost:3000/employees"));
 };
 
 const deleteEmployeeById = (req, res) => {

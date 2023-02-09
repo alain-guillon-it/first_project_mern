@@ -1,9 +1,26 @@
 require("dotenv").config();
 require("./config/db/database");
+const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const morgan = require("morgan");
 const express = require("express");
 const app = express();
+
+const adminUser = {
+  id: "43",
+  admin: true,
+  name: "zyrass",
+  email: "zyrass@outlook.fr"
+}
+
+function generateAccessToken(a_user) {
+  return jwt.sign(a_user, process.env.ACCESS_JWT, { expiresIn: "1800s"});
+}
+
+const accessToken = generateAccessToken(adminUser);
+console.log({
+  accessToken
+})
 
 const routesUserAPI = require("./router/userAPI.routes");
 const routesEmployeeAPI = require("./router/employeeAPI.routes");
